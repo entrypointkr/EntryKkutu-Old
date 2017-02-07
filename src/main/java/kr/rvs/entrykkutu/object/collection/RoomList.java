@@ -22,11 +22,6 @@ public class RoomList extends ObservableListWrapper<RoomItem> {
     }
 
     @Override
-    protected RoomItem doRemove(int index) {
-        return super.doRemove(index);
-    }
-
-    @Override
     public boolean add(RoomItem roomItem) {
         indexMap.put(roomItem.getId(), size());
         return super.add(roomItem);
