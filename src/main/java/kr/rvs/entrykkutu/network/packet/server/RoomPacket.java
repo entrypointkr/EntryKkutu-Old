@@ -1,8 +1,8 @@
-package kr.rvs.entrykkutu.network.packet;
+package kr.rvs.entrykkutu.network.packet.server;
 
+import kr.rvs.entrykkutu.network.packet.Packet;
+import kr.rvs.entrykkutu.network.packet.PacketType;
 import kr.rvs.entrykkutu.object.game.Room;
-import kr.rvs.entrykkutu.object.game.RoomOption;
-import kr.rvs.entrykkutu.object.game.UserState;
 
 /**
  * Created by Junhyeong Lim on 2017-02-07.

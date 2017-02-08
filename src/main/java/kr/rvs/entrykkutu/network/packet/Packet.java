@@ -9,7 +9,7 @@ public abstract class Packet extends GameObject {
     protected String type;
     protected transient PacketType packetType;
 
-    Packet() {
+    public Packet() {
         this.type = getPacketType().name();
         this.packetType = getPacketType();
     }
