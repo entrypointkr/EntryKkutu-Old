@@ -3,8 +3,10 @@ package kr.rvs.entrykkutu.gui;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import kr.rvs.entrykkutu.gui.item.RoomItem;
 import kr.rvs.entrykkutu.gui.listener.RoomDoubleClickListener;
+import kr.rvs.entrykkutu.network.listener.ChatListener;
 import kr.rvs.entrykkutu.network.listener.ErrorListener;
 import kr.rvs.entrykkutu.network.listener.InvitedListener;
 import kr.rvs.entrykkutu.network.listener.PreRoomListener;
@@ -20,18 +22,21 @@ import java.util.ResourceBundle;
  */
 public class Controller implements Initializable {
     @FXML
-    public TableView<RoomItem> roomTable;
+    public TableView<RoomItem> roomView;
+    @FXML
+    public TextArea chatArea;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        roomTable.setOnMouseClicked(new RoomDoubleClickListener(roomTable));
+        roomView.setOnMouseClicked(new RoomDoubleClickListener(roomView));
 
         ListenerManager.getInst().register(
-                new RoomListener(roomTable),
+                new RoomListener(roomView),
                 new UnknownListener(),
                 new ErrorListener(),
                 new InvitedListener(),
-                new PreRoomListener()
+                new PreRoomListener(),
+                new ChatListener(chatArea)
         );
     }
 }
