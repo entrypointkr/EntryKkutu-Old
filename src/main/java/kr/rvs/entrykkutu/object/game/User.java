@@ -9,9 +9,8 @@ import java.util.Map;
  */
 public class User extends GameObject {
     private String id;
-    private boolean guest;
     @SerializedName("game")
-    private UserState state;
+    private UserState game;
     private Profile profile;
     private int place;
     private UserData data;

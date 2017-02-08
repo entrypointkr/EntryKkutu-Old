@@ -8,7 +8,9 @@ public class Profile extends GameObject {
     private String type;
     private String id;
     private String name;
+    private String title;
     private String image;
+    private boolean isAjae;
     private String sid;
 
     public String getToken() {

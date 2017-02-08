@@ -15,7 +15,7 @@ public class Room extends GameObject {
     protected String master;
     protected Object[] players;
     protected boolean gaming;
-    protected UserState game;
+    protected RoomGame game;
     protected boolean practice;
     protected RoomOption opts;
 //    private Map<String, > readies;
@@ -64,7 +64,7 @@ public class Room extends GameObject {
         return gaming;
     }
 
-    public UserState getGame() {
+    public RoomGame getGame() {
         return game;
     }
 
@@ -120,7 +120,7 @@ public class Room extends GameObject {
         this.gaming = gaming;
     }
 
-    public void setGame(UserState game) {
+    public void setGame(RoomGame game) {
         this.game = game;
     }
 

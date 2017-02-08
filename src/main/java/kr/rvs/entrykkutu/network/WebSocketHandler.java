@@ -79,8 +79,12 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
             String typeStr = jsonObj.get("type").getAsString();
             PacketType type = (PacketType) Reflections.getFieldObj(PacketType.class, null, typeStr.toUpperCase());
 
-            Packet packet = GSON.fromJson(json, type.getPacketCls());
-            ListenerManager.getInst().update(ListenerManager.RECEIVE, packet);
+            try {
+                Packet packet = GSON.fromJson(json, type.getPacketCls());
+                ListenerManager.getInst().update(ListenerManager.RECEIVE, packet);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         } else if (frame instanceof PongWebSocketFrame) {
             System.out.println("WebSocket Client received pong");
         } else if (frame instanceof CloseWebSocketFrame) {

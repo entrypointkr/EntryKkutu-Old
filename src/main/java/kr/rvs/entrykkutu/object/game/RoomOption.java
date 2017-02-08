@@ -11,5 +11,5 @@ public class RoomOption extends GameObject {
     private boolean proverb;
     private boolean strict;
     private boolean sami;
-    private String[] injipick;
+    private String[] injpick;
 }

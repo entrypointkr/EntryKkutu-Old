@@ -11,9 +11,11 @@ import java.util.Map;
 public class WelcomePacket extends Packet {
     private String id;
     private boolean guest;
+    private int playTime;
     private Map<String, User> users;
     private Map<String, Room> rooms;
     private boolean admin;
+    private boolean caj;
 
     public String getId() {
         return id;
