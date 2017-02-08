@@ -5,7 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 import kr.rvs.entrykkutu.gui.item.RoomItem;
 import kr.rvs.entrykkutu.object.ListenerManager;
-import kr.rvs.entrykkutu.object.listener.RoomListener;
+import kr.rvs.entrykkutu.network.listener.RoomListener;
 
 import java.net.URL;
 import java.util.ResourceBundle;

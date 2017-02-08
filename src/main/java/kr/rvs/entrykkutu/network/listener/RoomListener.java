@@ -1,4 +1,4 @@
-package kr.rvs.entrykkutu.object.listener;
+package kr.rvs.entrykkutu.network.listener;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
