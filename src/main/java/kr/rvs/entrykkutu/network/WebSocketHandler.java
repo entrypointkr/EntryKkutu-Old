@@ -1,7 +1,5 @@
 package kr.rvs.entrykkutu.network;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.netty.channel.Channel;
@@ -18,6 +16,7 @@ import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.util.CharsetUtil;
 import kr.rvs.entrykkutu.network.packet.Packet;
 import kr.rvs.entrykkutu.network.packet.PacketType;
+import kr.rvs.entrykkutu.network.packet.UnknownPacket;
 import kr.rvs.entrykkutu.object.ListenerManager;
 import kr.rvs.entrykkutu.util.Reflections;
 import kr.rvs.entrykkutu.util.Static;
@@ -77,14 +76,14 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
             System.out.println(json);
             JsonObject jsonObj = new JsonParser().parse(json).getAsJsonObject();
             String typeStr = jsonObj.get("type").getAsString();
-            PacketType type = (PacketType) Reflections.getFieldObj(PacketType.class, null, typeStr.toUpperCase());
-
+            Packet packet;
             try {
-                Packet packet = Static.GSON.fromJson(json, type.getPacketCls());
-                ListenerManager.getInst().update(ListenerManager.RECEIVE, packet);
+                PacketType type = (PacketType) Reflections.getFieldObj(PacketType.class, null, typeStr.toUpperCase());
+                packet = Static.GSON.fromJson(json, type.getPacketCls());
             } catch (Exception ex) {
-                ex.printStackTrace();
+                packet = new UnknownPacket(typeStr);
             }
+            ListenerManager.getInst().update(ListenerManager.RECEIVE, packet);
         } else if (frame instanceof PongWebSocketFrame) {
             System.out.println("WebSocket Client received pong");
         } else if (frame instanceof CloseWebSocketFrame) {

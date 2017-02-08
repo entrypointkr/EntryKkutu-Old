@@ -1,7 +1,6 @@
 package kr.rvs.entrykkutu.network;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -12,8 +11,6 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.DefaultHttpHeaders;
 import io.netty.handler.codec.http.HttpClientCodec;
 import io.netty.handler.codec.http.HttpObjectAggregator;
-import io.netty.handler.codec.http.websocketx.CloseWebSocketFrame;
-import io.netty.handler.codec.http.websocketx.PingWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketClientHandshakerFactory;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
@@ -21,10 +18,11 @@ import io.netty.handler.codec.http.websocketx.WebSocketVersion;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
+import kr.rvs.entrykkutu.network.packet.Packet;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.URI;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
  * Created by Junhyeong Lim on 2017-02-06.
@@ -36,6 +34,8 @@ public final class WebSocket {
     private static final int SERVER = 2;
     private static final String URL =
             System.getProperty("url", SCHEME_WEBSOC + "://" + ADDR + ":8080/?server=" + SERVER);
+
+    private final Queue<Packet> packetQueue = new ConcurrentLinkedDeque<>();
 
     public void start() throws Exception {
         URI uri = new URI(URL);
@@ -91,25 +91,21 @@ public final class WebSocket {
             Channel ch = bs.connect(uri.getHost(), port).sync().channel();
             handler.handshakeFuture().sync();
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
             while (true) {
-                String msg = reader.readLine();
-                if (msg == null) {
-                    break;
-                } else if ("bye".equals(msg.toLowerCase())) {
-                    ch.writeAndFlush(new CloseWebSocketFrame());
-                    ch.closeFuture().sync();
-                    break;
-                } else if ("ping".equals(msg.toLowerCase())) {
-                    WebSocketFrame frame = new PingWebSocketFrame(Unpooled.wrappedBuffer(new byte[]{8, 1, 8, 1}));
+                for (Packet packet : packetQueue) {
+                    System.err.println(packet.toJson());
+                    WebSocketFrame frame = new TextWebSocketFrame(packet.toJson());
                     ch.writeAndFlush(frame);
-                } else {
-                    WebSocketFrame frame = new TextWebSocketFrame(msg);
-                    ch.writeAndFlush(frame);
+                    packetQueue.remove(packet);
                 }
             }
         } finally {
             group.shutdownGracefully();
         }
+    }
+
+    public void addPacket(Packet packet) {
+        packetQueue.add(packet);
     }
 }

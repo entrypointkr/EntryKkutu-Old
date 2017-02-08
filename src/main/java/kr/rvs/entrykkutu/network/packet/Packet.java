@@ -11,8 +11,8 @@ public abstract class Packet extends GameObject {
     protected transient PacketType packetType;
 
     public Packet() {
-        this.type = getPacketType().name();
         this.packetType = getPacketType();
+        this.type = getPacketType().name().toLowerCase();
     }
 
     public abstract PacketType getPacketType();

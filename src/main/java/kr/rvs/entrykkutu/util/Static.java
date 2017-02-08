@@ -4,12 +4,23 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.scene.control.Alert;
 import kr.rvs.entrykkutu.gui.EntryAlert;
+import kr.rvs.entrykkutu.network.WebSocket;
+import kr.rvs.entrykkutu.network.packet.Packet;
 
 /**
  * Created by Junhyeong Lim on 2017-02-08.
  */
 public class Static {
+    private static WebSocket socket;
     public static final Gson GSON = new GsonBuilder().create();
+
+    public static void setSocket(WebSocket socket) {
+        Static.socket = socket;
+    }
+
+    public static WebSocket getSocket() {
+        return socket;
+    }
 
     public static String str(Object obj) {
         return String.valueOf(obj);
@@ -26,5 +37,9 @@ public class Static {
                         ex.toString()
                 )
                 .show();
+    }
+
+    public static void sendPacket(Packet packet) {
+        socket.addPacket(packet);
     }
 }

@@ -2,6 +2,7 @@ package kr.rvs.entrykkutu;
 
 import kr.rvs.entrykkutu.gui.RoomSelect;
 import kr.rvs.entrykkutu.network.WebSocket;
+import kr.rvs.entrykkutu.util.Static;
 
 import static javafx.application.Application.launch;
 
@@ -9,7 +10,6 @@ import static javafx.application.Application.launch;
  * Created by Junhyeong Lim on 2017-02-06.
  */
 public final class EntryKkutu {
-    private static WebSocket network;
 
     public static void main(String[] args) throws Exception {
         // GUI
@@ -17,7 +17,7 @@ public final class EntryKkutu {
                 "EntryKkutu GUI").start();
 
         // Network
-        network = new WebSocket();
-        network.start();
+        Static.setSocket(new WebSocket());
+        Static.getSocket().start();
     }
 }

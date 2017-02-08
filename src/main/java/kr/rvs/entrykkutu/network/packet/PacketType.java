@@ -1,10 +1,13 @@
 package kr.rvs.entrykkutu.network.packet;
 
-import kr.rvs.entrykkutu.network.packet.client.RoomJoinPacket;
+import kr.rvs.entrykkutu.network.packet.client.RoomEnterPacket;
+import kr.rvs.entrykkutu.network.packet.client.TalkPacket;
 import kr.rvs.entrykkutu.network.packet.server.ChatPacket;
 import kr.rvs.entrykkutu.network.packet.server.ConnectPacket;
 import kr.rvs.entrykkutu.network.packet.server.DisconnectPacket;
 import kr.rvs.entrykkutu.network.packet.server.ErrorPacket;
+import kr.rvs.entrykkutu.network.packet.server.InvitedPacket;
+import kr.rvs.entrykkutu.network.packet.server.RoomJoinPacket;
 import kr.rvs.entrykkutu.network.packet.server.RoomPacket;
 import kr.rvs.entrykkutu.network.packet.server.WelcomePacket;
 
@@ -12,6 +15,8 @@ import kr.rvs.entrykkutu.network.packet.server.WelcomePacket;
  * Created by Junhyeong Lim on 2017-02-07.
  */
 public enum PacketType {
+
+
     UNKNOWN(Side.UNKNOWN, UnknownPacket.class),
 
     WELCOME(Side.SERVER, WelcomePacket.class),
@@ -20,8 +25,11 @@ public enum PacketType {
     CHAT(Side.SERVER, ChatPacket.class),
     ERROR(Side.SERVER, ErrorPacket.class),
     CONN(Side.SERVER, ConnectPacket.class),
+    CONNROOM(Side.SERVER, RoomJoinPacket.class),
+    INVITED(Side.SERVER, InvitedPacket.class),
 
-    CONNROOM(Side.CLIENT, RoomJoinPacket.class),
+    ENTER(Side.CLIENT, RoomEnterPacket.class),
+    TALK(Side.CLIENT, TalkPacket.class),
     ;
 
     private Side side;

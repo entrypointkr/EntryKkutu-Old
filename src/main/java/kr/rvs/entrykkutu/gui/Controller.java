@@ -4,7 +4,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 import kr.rvs.entrykkutu.gui.item.RoomItem;
+import kr.rvs.entrykkutu.gui.listener.RoomDoubleClickListener;
+import kr.rvs.entrykkutu.network.listener.ErrorListener;
+import kr.rvs.entrykkutu.network.listener.InvitedListener;
 import kr.rvs.entrykkutu.network.listener.RoomListener;
+import kr.rvs.entrykkutu.network.listener.UnknownListener;
 import kr.rvs.entrykkutu.object.ListenerManager;
 
 import java.net.URL;
@@ -19,14 +23,13 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        roomTable.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2) {
-                new EntryAlert().setContextText("!").show();
-            }
-        });
+        roomTable.setOnMouseClicked(new RoomDoubleClickListener(roomTable));
 
         ListenerManager.getInst().register(
-                new RoomListener(roomTable)
+                new RoomListener(roomTable),
+                new UnknownListener(),
+                new ErrorListener(),
+                new InvitedListener()
         );
     }
 }

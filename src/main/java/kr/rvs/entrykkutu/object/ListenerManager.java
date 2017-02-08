@@ -41,18 +41,16 @@ public class ListenerManager {
 
     public void update(int state, Packet packet) {
         for (PacketListener listener : listeners) {
-            executor.execute(() -> {
-                if (!listener.getTypes().contains(packet.getPacketType())) {
-                    return;
-                }
-                if (state == SEND) {
-                    listener.onSending(packet);
-                } else if (state == RECEIVE) {
-                    listener.onReceive(packet);
-                } else {
-                    throw new RuntimeException("What the fuck \"" + state + "\" state");
-                }
-            });
+            if (!listener.getTypes().contains(packet.getPacketType())) {
+                continue;
+            }
+            if (state == SEND) {
+                listener.onSending(packet);
+            } else if (state == RECEIVE) {
+                listener.onReceive(packet);
+            } else {
+                throw new RuntimeException("What the fuck \"" + state + "\" state");
+            }
         }
     }
 }
