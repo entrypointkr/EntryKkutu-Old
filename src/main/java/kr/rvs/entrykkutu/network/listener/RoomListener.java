@@ -1,5 +1,6 @@
 package kr.rvs.entrykkutu.network.listener;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 import kr.rvs.entrykkutu.gui.item.RoomItem;
@@ -11,6 +12,7 @@ import kr.rvs.entrykkutu.object.PacketListener;
 import kr.rvs.entrykkutu.object.collection.RoomList;
 import kr.rvs.entrykkutu.object.game.Room;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -43,7 +45,7 @@ public class RoomListener extends PacketListener {
             tableView.setItems(roomList);
         } else if (obj instanceof RoomPacket) {
             Room room = ((RoomPacket) obj).getRoom();
-            RoomList list = (RoomList) tableView.getItems();
+            final RoomList list = new RoomList(new ArrayList<>(tableView.getItems()));
             Integer index = list.indexMap.get(room.getId());
             if (index == null) {
                 index = list.size();
@@ -57,7 +59,7 @@ public class RoomListener extends PacketListener {
                 list.add(index, item);
             }
 
-            tableView.setItems(list);
+            Platform.runLater(() -> tableView.setItems(list));
         }
     }
 
