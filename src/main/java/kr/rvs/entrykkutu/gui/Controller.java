@@ -19,6 +19,12 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        roomTable.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                new EntryAlert().setContextText("!").show();
+            }
+        });
+
         ListenerManager.getInst().register(
                 new RoomListener(roomTable)
         );
