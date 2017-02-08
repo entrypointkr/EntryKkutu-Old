@@ -18,6 +18,6 @@ public final class EntryKkutu {
 
         // Network
         Static.setSocket(new WebSocket());
-        Static.getSocket().start();
+        Static.getSocket().start(8080);
     }
 }

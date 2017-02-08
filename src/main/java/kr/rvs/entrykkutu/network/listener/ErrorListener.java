@@ -6,6 +6,7 @@ import kr.rvs.entrykkutu.network.packet.Packet;
 import kr.rvs.entrykkutu.network.packet.PacketType;
 import kr.rvs.entrykkutu.network.packet.server.ErrorPacket;
 import kr.rvs.entrykkutu.object.PacketListener;
+import kr.rvs.entrykkutu.util.Static;
 
 import java.lang.reflect.Method;
 
@@ -23,11 +24,22 @@ public class ErrorListener extends PacketListener {
     public void onReceive(Packet obj) {
         String type = ((ErrorPacket) obj).getCode();
         try {
-            Method method = getClass().getMethod(type, String.class);
+            Method method;
+            if (Static.isNumber(type)) {
+                method = getClass().getMethod("error" + type, String.class);
+            } else {
+                method = getClass().getMethod(type, String.class);
+            }
             method.invoke(this, type);
         } catch (Exception e) {
             unknown(type);
         }
+    }
+
+    private void showAlert(String... msg) {
+        new EntryAlert().setType(Alert.AlertType.ERROR)
+                .setContextText(msg)
+                .show();
     }
 
     private void unknown(String type) {
@@ -35,13 +47,19 @@ public class ErrorListener extends PacketListener {
                 "에러 코드: " + type);
     }
 
-    private void full(String type) {
+    public void full(String type) {
         showAlert("서버가 가득 찼습니다");
     }
 
-    private void showAlert(String... msg) {
-        new EntryAlert().setType(Alert.AlertType.ERROR)
-                .setContextText(msg)
-                .show();
+    public void error429(String type) {
+        showAlert("방이 꽉 찼습니다");
+    }
+
+    public void error416(String type) {
+        showAlert("이미 게임 중인 방입니다.");
+    }
+
+    public void error440(String type) {
+        showAlert("셧다운제");
     }
 }

@@ -23,6 +23,9 @@ public class RoomDoubleClickListener implements EventHandler<MouseEvent> {
     public void handle(MouseEvent event) {
         if (event.getClickCount() == 2) {
             RoomItem item = tableView.getSelectionModel().getSelectedItem();
+            if (item == null) {
+                return;
+            }
             Packet packet = new RoomEnterPacket(item.getId());
             Static.sendPacket(packet);
         }

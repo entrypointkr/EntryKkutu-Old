@@ -7,6 +7,7 @@ import kr.rvs.entrykkutu.gui.item.RoomItem;
 import kr.rvs.entrykkutu.gui.listener.RoomDoubleClickListener;
 import kr.rvs.entrykkutu.network.listener.ErrorListener;
 import kr.rvs.entrykkutu.network.listener.InvitedListener;
+import kr.rvs.entrykkutu.network.listener.PreRoomListener;
 import kr.rvs.entrykkutu.network.listener.RoomListener;
 import kr.rvs.entrykkutu.network.listener.UnknownListener;
 import kr.rvs.entrykkutu.object.ListenerManager;
@@ -29,7 +30,8 @@ public class Controller implements Initializable {
                 new RoomListener(roomTable),
                 new UnknownListener(),
                 new ErrorListener(),
-                new InvitedListener()
+                new InvitedListener(),
+                new PreRoomListener()
         );
     }
 }

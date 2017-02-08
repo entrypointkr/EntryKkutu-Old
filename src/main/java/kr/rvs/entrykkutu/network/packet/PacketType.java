@@ -7,6 +7,7 @@ import kr.rvs.entrykkutu.network.packet.server.ConnectPacket;
 import kr.rvs.entrykkutu.network.packet.server.DisconnectPacket;
 import kr.rvs.entrykkutu.network.packet.server.ErrorPacket;
 import kr.rvs.entrykkutu.network.packet.server.InvitedPacket;
+import kr.rvs.entrykkutu.network.packet.server.PreRoomPacket;
 import kr.rvs.entrykkutu.network.packet.server.RoomJoinPacket;
 import kr.rvs.entrykkutu.network.packet.server.RoomPacket;
 import kr.rvs.entrykkutu.network.packet.server.WelcomePacket;
@@ -15,7 +16,6 @@ import kr.rvs.entrykkutu.network.packet.server.WelcomePacket;
  * Created by Junhyeong Lim on 2017-02-07.
  */
 public enum PacketType {
-
 
     UNKNOWN(Side.UNKNOWN, UnknownPacket.class),
 
@@ -27,6 +27,7 @@ public enum PacketType {
     CONN(Side.SERVER, ConnectPacket.class),
     CONNROOM(Side.SERVER, RoomJoinPacket.class),
     INVITED(Side.SERVER, InvitedPacket.class),
+    PREROOM(Side.SERVER, PreRoomPacket.class),
 
     ENTER(Side.CLIENT, RoomEnterPacket.class),
     TALK(Side.CLIENT, TalkPacket.class),
