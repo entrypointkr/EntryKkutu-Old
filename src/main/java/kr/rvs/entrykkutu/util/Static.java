@@ -1,5 +1,7 @@
 package kr.rvs.entrykkutu.util;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.scene.control.Alert;
 import kr.rvs.entrykkutu.gui.EntryAlert;
 
@@ -7,6 +9,8 @@ import kr.rvs.entrykkutu.gui.EntryAlert;
  * Created by Junhyeong Lim on 2017-02-08.
  */
 public class Static {
+    public static final Gson GSON = new GsonBuilder().create();
+
     public static String str(Object obj) {
         return String.valueOf(obj);
     }

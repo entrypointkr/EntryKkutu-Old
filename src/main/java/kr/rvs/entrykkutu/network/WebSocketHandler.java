@@ -20,12 +20,12 @@ import kr.rvs.entrykkutu.network.packet.Packet;
 import kr.rvs.entrykkutu.network.packet.PacketType;
 import kr.rvs.entrykkutu.object.ListenerManager;
 import kr.rvs.entrykkutu.util.Reflections;
+import kr.rvs.entrykkutu.util.Static;
 
 /**
  * Created by Junhyeong Lim on 2017-02-06.
  */
 public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     private final WebSocketClientHandshaker handshaker;
     private ChannelPromise handshakeFuture;
@@ -80,7 +80,7 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
             PacketType type = (PacketType) Reflections.getFieldObj(PacketType.class, null, typeStr.toUpperCase());
 
             try {
-                Packet packet = GSON.fromJson(json, type.getPacketCls());
+                Packet packet = Static.GSON.fromJson(json, type.getPacketCls());
                 ListenerManager.getInst().update(ListenerManager.RECEIVE, packet);
             } catch (Exception ex) {
                 ex.printStackTrace();
