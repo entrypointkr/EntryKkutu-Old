@@ -14,10 +14,6 @@
         <Insets bottom="10" left="10" right="10" top="10"/>
     </padding>
 
-    <bottom>
-        <TextField BorderPane.alignment="CENTER"/>
-    </bottom>
-
     <center>
         <SplitPane dividerPositions="0.6957746478873239" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0"
                    BorderPane.alignment="CENTER">
@@ -65,8 +61,13 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                     </columnResizePolicy>
                 </TableView>
+
                 <TextArea fx:id="chatArea" editable="false" prefHeight="200.0" prefWidth="200.0"/>
             </items>
         </SplitPane>
     </center>
+
+    <bottom>
+        <TextField fx:id="chatField" BorderPane.alignment="CENTER"/>
+    </bottom>
 </BorderPane>
