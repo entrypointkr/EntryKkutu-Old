@@ -23,8 +23,7 @@ public class ChatSendListener implements EventHandler<KeyEvent> {
         if (event.getCode() != KeyCode.ENTER) {
             return;
         }
-        Static.sendPacket(
-                PacketFactory.creeateTalk(area.getText()));
+        Static.sendPacket(PacketFactory.creeateTalk(area.getText()));
         area.setText("");
     }
 }

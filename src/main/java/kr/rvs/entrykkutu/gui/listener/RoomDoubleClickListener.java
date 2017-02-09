@@ -4,8 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import kr.rvs.entrykkutu.gui.item.RoomItem;
-import kr.rvs.entrykkutu.network.packet.Packet;
-import kr.rvs.entrykkutu.network.packet.client.RoomEnterPacket;
+import kr.rvs.entrykkutu.network.PacketFactory;
 import kr.rvs.entrykkutu.util.Static;
 
 
@@ -26,8 +25,7 @@ public class RoomDoubleClickListener implements EventHandler<MouseEvent> {
             if (item == null) {
                 return;
             }
-            Packet packet = new RoomEnterPacket(item.getId());
-            Static.sendPacket(packet);
+            Static.sendPacket(PacketFactory.createRoomEnter(item.getId()));
         }
     }
 }
