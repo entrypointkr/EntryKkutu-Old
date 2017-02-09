@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 /**
  * Created by Junhyeong Lim on 2017-02-06.
  */
-public final class RoomSelect extends Application {
+public final class Lobby extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         int width = 700;
