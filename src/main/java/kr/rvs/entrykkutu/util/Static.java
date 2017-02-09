@@ -79,4 +79,17 @@ public class Static {
             return false;
         }
     }
+
+    public static int countMatches(String contents, String element) {
+        if (contents.isEmpty() || element.isEmpty()) {
+            return 0;
+        }
+        int ret = 0;
+        int lastIndex = 0;
+        while ((lastIndex = contents.indexOf(element, lastIndex)) != -1) {
+            ret++;
+            lastIndex++;
+        }
+        return ret;
+    }
 }

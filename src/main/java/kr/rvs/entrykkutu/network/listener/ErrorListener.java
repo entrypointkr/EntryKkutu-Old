@@ -14,8 +14,6 @@ import java.lang.reflect.Method;
  * Created by Junhyeong Lim on 2017-02-08.
  */
 public class ErrorListener extends PacketListener {
-    public static final String FULL = "full";
-
     public ErrorListener() {
         super(PacketType.ERROR);
     }

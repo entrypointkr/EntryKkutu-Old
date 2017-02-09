@@ -1,5 +1,6 @@
 package kr.rvs.entrykkutu.network.listener;
 
+import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 import kr.rvs.entrykkutu.network.packet.Packet;
 import kr.rvs.entrykkutu.network.packet.PacketType;
@@ -26,8 +27,11 @@ public class ChatListener extends PacketListener {
             text += "\n";
         }
         Profile profile = packet.getProfile();
-        text += (profile.getTitle() != null ? profile.getTitle() : profile.getName()) + ": "  + packet.getValue();
-        textArea.appendText(text);
-        textArea.positionCaret(textArea.caretPositionProperty().get());
+        text += (profile.getTitle() != null ? profile.getTitle() : profile.getName()) + ": " + packet.getValue();
+        textArea.setText(textArea.getText() + text);
+        Platform.runLater(() -> {
+            textArea.selectPositionCaret(textArea.getLength());
+            textArea.deselect();
+        });
     }
 }

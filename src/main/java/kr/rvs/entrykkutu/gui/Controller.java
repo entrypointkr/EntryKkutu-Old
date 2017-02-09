@@ -6,6 +6,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import kr.rvs.entrykkutu.gui.item.RoomItem;
+import kr.rvs.entrykkutu.gui.listener.ChatChangeListener;
 import kr.rvs.entrykkutu.gui.listener.ChatSendListener;
 import kr.rvs.entrykkutu.gui.listener.RoomDoubleClickListener;
 import kr.rvs.entrykkutu.network.listener.ChatListener;
@@ -33,6 +34,8 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         roomView.setOnMouseClicked(new RoomDoubleClickListener(roomView));
+        chatArea.setWrapText(true);
+        chatArea.textProperty().addListener(new ChatChangeListener(chatArea, 50));
         chatField.setOnKeyPressed(new ChatSendListener(chatField));
 
         ListenerManager.getInst().register(
