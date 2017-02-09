@@ -17,7 +17,6 @@ public class ListenerManager {
     public static final int RECEIVE = 1;
 
     private static ListenerManager inst;
-    private static final Object LOCK = new Object();
 
     private final Map<PacketType, Set<PacketListener>> listenerMap = new ConcurrentHashMap<>();
 
