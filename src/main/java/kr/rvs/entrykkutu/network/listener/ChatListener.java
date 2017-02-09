@@ -5,6 +5,7 @@ import kr.rvs.entrykkutu.network.packet.Packet;
 import kr.rvs.entrykkutu.network.packet.PacketType;
 import kr.rvs.entrykkutu.network.packet.server.ChatPacket;
 import kr.rvs.entrykkutu.object.PacketListener;
+import kr.rvs.entrykkutu.object.game.Profile;
 
 /**
  * Created by Junhyeong Lim on 2017-02-09.
@@ -20,12 +21,13 @@ public class ChatListener extends PacketListener {
     @Override
     public void onReceive(Packet obj) {
         ChatPacket packet = (ChatPacket) obj;
-        String text = textArea.getText();
-        if (!text.equals("")) {
+        String text = "";
+        if (!textArea.getText().equals("")) {
             text += "\n";
         }
-        text += packet.getProfile().getTitle() + ": "  + packet.getValue();
-
-        textArea.setText(text);
+        Profile profile = packet.getProfile();
+        text += (profile.getTitle() != null ? profile.getTitle() : profile.getName()) + ": "  + packet.getValue();
+        textArea.appendText(text);
+        textArea.positionCaret(textArea.caretPositionProperty().get());
     }
 }
