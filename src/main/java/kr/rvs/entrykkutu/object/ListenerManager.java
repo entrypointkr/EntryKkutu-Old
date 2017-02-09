@@ -2,12 +2,12 @@ package kr.rvs.entrykkutu.object;
 
 
 import kr.rvs.entrykkutu.network.packet.Packet;
+import kr.rvs.entrykkutu.network.packet.PacketType;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Junhyeong Lim on 2017-02-07.
@@ -17,6 +17,12 @@ public class ListenerManager {
     public static final int RECEIVE = 1;
 
     private static ListenerManager inst;
+    private static final Object LOCK = new Object();
+
+    private final Map<PacketType, Set<PacketListener>> listenerMap = new ConcurrentHashMap<>();
+
+    private ListenerManager() {
+    }
 
     public static synchronized ListenerManager getInst() {
         if (inst == null) {
@@ -25,25 +31,36 @@ public class ListenerManager {
         return inst;
     }
 
-    private ListenerManager() {
-    }
-
-    private Set<PacketListener> listeners = new HashSet<>();
-    private final Executor executor = Executors.newCachedThreadPool();
-
     public void register(PacketListener... listeners) {
-        this.listeners.addAll(Arrays.asList(listeners));
+        for (PacketListener listener : listeners) {
+            for (PacketType type : listener.getTypes()) {
+                Set<PacketListener> listenerSet = this.listenerMap.get(type);
+                if (listenerSet == null) {
+                    listenerSet = Collections.newSetFromMap(new ConcurrentHashMap<>());
+                }
+                listenerSet.add(listener);
+                this.listenerMap.put(type, listenerSet);
+            }
+        }
+
     }
 
     public void unregister(PacketListener listener) {
-        listeners.remove(listener);
+        for (PacketType type : listener.getTypes()) {
+            Set<PacketListener> listenerSet = this.listenerMap.get(type);
+            if (listenerSet == null) {
+                continue;
+            }
+            listenerSet.remove(listener);
+        }
     }
 
     public void update(int state, Packet packet) {
-        for (PacketListener listener : listeners) {
-            if (!listener.getTypes().contains(packet.getPacketType())) {
-                continue;
-            }
+        Set<PacketListener> listenerSet = this.listenerMap.get(packet.getPacketType());
+        if (listenerSet == null) {
+            return;
+        }
+        for (PacketListener listener : listenerSet) {
             if (state == SEND) {
                 listener.onSending(packet);
             } else if (state == RECEIVE) {

@@ -2,6 +2,8 @@ package kr.rvs.entrykkutu;
 
 import kr.rvs.entrykkutu.gui.RoomSelect;
 import kr.rvs.entrykkutu.network.WebSocket;
+import kr.rvs.entrykkutu.network.listener.ErrorListener;
+import kr.rvs.entrykkutu.object.ListenerManager;
 import kr.rvs.entrykkutu.util.Static;
 
 import static javafx.application.Application.launch;
@@ -15,6 +17,11 @@ public final class EntryKkutu {
         // GUI
         new Thread(() -> launch(RoomSelect.class),
                 "EntryKkutu GUI").start();
+
+        // Listener
+        ListenerManager.getInst().register(
+                new ErrorListener()
+        );
 
         // Network
         Static.setSocket(new WebSocket());

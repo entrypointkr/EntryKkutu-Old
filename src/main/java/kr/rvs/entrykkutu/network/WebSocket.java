@@ -33,10 +33,12 @@ public final class WebSocket {
     private static final String SCHEME_WEBSOCS = "wss";
     private static final String ADDR = "kkutu.kr";
 
+    public static final String FULL_ADDR = SCHEME_WEBSOC + "://" + ADDR;
+
     private final Queue<Packet> packetQueue = new ConcurrentLinkedDeque<>();
 
     public void start(int port) throws Exception {
-        URI uri = new URI(System.getProperty("url", SCHEME_WEBSOC + "://" + ADDR + ":" + port));
+        URI uri = new URI(FULL_ADDR + ":" + port);
         String scheme = uri.getScheme() == null ? SCHEME_WEBSOC : uri.getScheme();
         final String host = uri.getHost() == null ? ADDR : uri.getHost();
 
@@ -76,7 +78,7 @@ public final class WebSocket {
             Channel ch = bs.connect(uri.getHost(), port).sync().channel();
             handler.handshakeFuture().sync();
 
-            for (;;) {
+            for (; ; ) {
                 for (Packet packet : packetQueue) {
                     String json = packet.toJson();
                     System.err.println(json);

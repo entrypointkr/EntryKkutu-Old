@@ -10,6 +10,14 @@ import kr.rvs.entrykkutu.object.game.User;
 public class ConnectPacket extends Packet {
     private User user;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public PacketType getPacketType() {
         return PacketType.CONN;

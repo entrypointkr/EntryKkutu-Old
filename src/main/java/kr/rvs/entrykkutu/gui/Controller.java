@@ -11,6 +11,7 @@ import kr.rvs.entrykkutu.gui.listener.ChatSendListener;
 import kr.rvs.entrykkutu.gui.listener.RoomDoubleClickListener;
 import kr.rvs.entrykkutu.network.listener.ChatListener;
 import kr.rvs.entrykkutu.network.listener.ErrorListener;
+import kr.rvs.entrykkutu.network.listener.InstantConnListener;
 import kr.rvs.entrykkutu.network.listener.InvitedListener;
 import kr.rvs.entrykkutu.network.listener.PreRoomListener;
 import kr.rvs.entrykkutu.network.listener.RoomListener;
@@ -41,10 +42,10 @@ public class Controller implements Initializable {
         ListenerManager.getInst().register(
                 new RoomListener(roomView),
                 new UnknownListener(),
-                new ErrorListener(),
                 new InvitedListener(),
                 new PreRoomListener(),
-                new ChatListener(chatArea)
+                new ChatListener(chatArea),
+                new InstantConnListener()
         );
     }
 }
