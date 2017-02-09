@@ -17,7 +17,7 @@ import kr.rvs.entrykkutu.network.packet.server.WelcomePacket;
  */
 public enum PacketType {
 
-    UNKNOWN(Side.UNKNOWN, UnknownPacket.class),
+    UNKNOWN(Side.CLIENT, UnknownPacket.class),
 
     WELCOME(Side.SERVER, WelcomePacket.class),
     ROOM(Side.SERVER, RoomPacket.class),
@@ -51,7 +51,6 @@ public enum PacketType {
 
     public enum Side {
         SERVER,
-        CLIENT,
-        UNKNOWN
+        CLIENT
     }
 }
