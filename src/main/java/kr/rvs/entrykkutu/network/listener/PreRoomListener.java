@@ -24,4 +24,3 @@ public class PreRoomListener extends PacketListener {
         }
     }
 }
-

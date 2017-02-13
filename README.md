@@ -1,2 +1,4 @@
 # EntryKkutu
-Kkutu Bot
+Java Kkutu Client
+
+Jenkins: http://builds.rvs.kr/job/EntryKkutu/
