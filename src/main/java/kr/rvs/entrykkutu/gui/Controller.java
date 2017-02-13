@@ -10,7 +10,6 @@ import kr.rvs.entrykkutu.gui.listener.ChatChangeListener;
 import kr.rvs.entrykkutu.gui.listener.ChatSendListener;
 import kr.rvs.entrykkutu.gui.listener.RoomDoubleClickListener;
 import kr.rvs.entrykkutu.network.listener.ChatListener;
-import kr.rvs.entrykkutu.network.listener.ErrorListener;
 import kr.rvs.entrykkutu.network.listener.InstantConnListener;
 import kr.rvs.entrykkutu.network.listener.InvitedListener;
 import kr.rvs.entrykkutu.network.listener.PreRoomListener;
